@@ -13,6 +13,7 @@ func InitRoutes(routes *gin.Engine) {
 	routes.POST("users/register", controller_users.Register)
 	routes.POST("users/login", controller_users.Login)
 	routes.GET("users/confirmregistration", controller_users.ConfirmRegistration)
+	routes.GET("users/:uid", AuthMiddleware(), controller_users.GetUserByUID)
 	routes.GET("users", AuthMiddleware(), controller_users.GetUsersPage)
 	routes.POST("users/changepassword", AuthMiddleware(), controller_users.ChangePassword)
 	routes.POST("users/refreshtoken", AuthMiddleware(), controller_users.RefreshToken)

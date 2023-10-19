@@ -5,18 +5,17 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/AndrewSalko/salkodev.edms.go/controller"
 	"github.com/AndrewSalko/salkodev.edms.go/database_folders"
 	"github.com/gin-gonic/gin"
 )
-
-const UIDParam = "uid"
 
 func GetFolderByUID(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
 
-	uid := c.Param(UIDParam)
+	uid := c.Param(controller.UIDParam)
 	if uid == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "folder uid not specified"})
 		return

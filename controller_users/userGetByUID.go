@@ -1,4 +1,4 @@
-package controller_orgs
+package controller_users
 
 import (
 	"context"
@@ -6,26 +6,26 @@ import (
 	"time"
 
 	"github.com/AndrewSalko/salkodev.edms.go/controller"
-	"github.com/AndrewSalko/salkodev.edms.go/database_orgs"
+	"github.com/AndrewSalko/salkodev.edms.go/database_users"
 	"github.com/gin-gonic/gin"
 )
 
-func GetOrganizationByUID(c *gin.Context) {
+func GetUserByUID(c *gin.Context) {
 
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	defer cancel()
 
 	uid := c.Param(controller.UIDParam)
 	if uid == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "organization uid not specified"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user uid not specified"})
 		return
 	}
 
-	org, err := database_orgs.FindOrganizationByUID(ctx, uid)
+	user, err := database_users.FindUserByUID(ctx, uid)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, org)
+	c.JSON(http.StatusOK, user)
 }
